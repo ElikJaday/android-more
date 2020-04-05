@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import dev.elvir.morecommunication.R
-import kotlinx.android.synthetic.main.act_splash_screen.*
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
 import ua.naiksoftware.stomp.dto.LifecycleEvent
@@ -19,9 +18,6 @@ class SplashScreenActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_splash_screen)
         createWebSocketClient();
-        iv_test.setOnClickListener {
-
-        }
 //        Handler().postDelayed({
 //            startActivity(Intent(this, SignInActivity::class.java))
 //        }, 800)
