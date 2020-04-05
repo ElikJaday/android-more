@@ -12,7 +12,7 @@ class SignInActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_sign_in_screen)
-        btn_enter.setOnClickListener {
+        btn_enter_sign_in.setOnClickListener {
             startActivity(Intent(this, MainMenuActivity::class.java))
         }
     }
