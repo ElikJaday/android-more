@@ -1,96 +1,81 @@
 package dev.elvir.morecommunication.ui.sign_in_anonymously
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.content.Intent
+import android.graphics.Bitmap
+import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import androidx.core.content.ContextCompat
+import com.tedpark.tedpermission.rx2.TedRx2Permission
 import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.R
-import dev.elvir.morecommunication.data.api.AuthApi
-import dev.elvir.morecommunication.data.model.User
-import dev.elvir.morecommunication.data.model.UserImage
-import dev.elvir.morecommunication.data.model.UserType
 import dev.elvir.morecommunication.ui.base.BaseActivity
-import dev.elvir.morecommunication.ui.main_menu_screen.MainMenuActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import dev.elvir.morecommunication.ui.select_image.SELECT_CAPTURE
+import dev.elvir.morecommunication.ui.select_image.SELECT_MEDIA
+import dev.elvir.morecommunication.ui.select_image.SelectImageFragmentScreen
 import kotlinx.android.synthetic.main.activity_sign_in_anonymously_screen.*
-import retrofit2.Retrofit
-import javax.inject.Inject
 
 
-@SuppressLint("CheckResult")
-class SignInAnonymouslyScreenActivity : BaseActivity() {
+class SignInAnonymouslyScreenActivity :
+    BaseActivity(), SignInAnonymouslyContract.View, SelectImageFragmentScreen.CallBack {
 
-    @Inject
-    lateinit var retrofit: Retrofit
-    lateinit var byteArray: ByteArray
+    val presenter: SignInAnonymouslyContract.Presenter = SignInAnonymouslyPresenter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorMainLogo)
         (applicationContext as App).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_anonymously_screen)
-        btn_enter.setOnClickListener {
-            sendRequest()
-        }
+        addWidgetListener()
+    }
+
+    fun addWidgetListener() {
         iv_choose.setOnClickListener {
-            getImageFromMediaProvider()
-        }
-
-
-    }
-
-    fun getImageFromMediaProvider() {
-        val pickPhoto = Intent(
-            Intent.ACTION_PICK,
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-        )
-        startActivityForResult(pickPhoto, 1) //one can be replaced with any action code
-
-    }
-
-    fun getImageFromCamera() {
-        val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(takePicture, 0)
-    }
-
-
-    private fun sendRequest() {
-        retrofit.create(AuthApi::class.java)
-            .authAnonymously(
-                User(
-                    "Elvir Ibrahimov",
-                    "@ElikJaday",
-                    "+79168867925",
-                    UserType.ANONYMOUSLY,
-                    UserImage("example", "jpeg", byteArray)
+            TedRx2Permission.with(this)
+                .setPermissions(Manifest.permission.CAMERA)
+                .request()
+                .subscribe (
+                    {
+                        presenter.clickSelectImage()
+                    },
+                    {}
                 )
-            )
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { startActivity(Intent(this, MainMenuActivity::class.java)) },
-                { it.printStackTrace() }
-            )
+        }
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) {
+    override fun showSelectImage() {
+        val fragment = SelectImageFragmentScreen.newInstance().also { it.registerCallback(this) }
+        fragment.show(supportFragmentManager, "")
+    }
+
+    override fun selected(type: Int) {
+        when (type) {
+            SELECT_CAPTURE -> {
+                val takePicture = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                startActivityForResult(takePicture, SELECT_CAPTURE)
+            }
+            SELECT_MEDIA -> {
+                val getIntent = Intent(Intent.ACTION_GET_CONTENT)
+                getIntent.type = "image/*"
+                val pickIntent =
+                    Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                pickIntent.type = "image/*"
+                val chooserIntent = Intent.createChooser(getIntent, "Select Image")
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, arrayOf(pickIntent))
+                startActivityForResult(chooserIntent, SELECT_MEDIA)
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
-            0 -> {
-                var uri = data?.data
-                iv_choose.setImageURI(uri)
+            SELECT_CAPTURE -> {
+                val bitmap : Bitmap? = data?.extras?.get("data") as Bitmap?
+                iv_choose.setImageBitmap(bitmap)
             }
-            1 -> {
-                var uri = data?.data
+            SELECT_MEDIA -> {
+                val uri: Uri? = data?.data
                 iv_choose.setImageURI(uri)
-                byteArray = contentResolver.openInputStream(uri!!)?.readBytes()!!
             }
         }
     }

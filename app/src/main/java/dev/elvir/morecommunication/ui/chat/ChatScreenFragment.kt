@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.elvir.morecommunication.R
-import dev.elvir.morecommunication.data.model.Message
-import dev.elvir.morecommunication.data.model.MessageType
+import dev.elvir.morecommunication.data.entity.message.Message
+import dev.elvir.morecommunication.data.entity.message.MessageType
 import kotlinx.android.synthetic.main.fmt_chat_screen.*
 
 class ChatScreenFragment : Fragment() {
@@ -31,11 +31,36 @@ class ChatScreenFragment : Fragment() {
     }
 
     private fun addMessageList() {
-        listMessage.add(Message("hello", MessageType.OUTCOMING))
-        listMessage.add(Message("How are you, bro ?", MessageType.OUTCOMING))
-        listMessage.add(Message("hey :)", MessageType.INCOMING))
-        listMessage.add(Message("I am fine.Are you ?", MessageType.INCOMING))
-        listMessage.add(Message("what did you do yesterday ?", MessageType.OUTCOMING))
+        listMessage.add(
+            Message(
+                "hello",
+                MessageType.OUTCOMING
+            )
+        )
+        listMessage.add(
+            Message(
+                "How are you, bro ?",
+                MessageType.OUTCOMING
+            )
+        )
+        listMessage.add(
+            Message(
+                "hey :)",
+                MessageType.INCOMING
+            )
+        )
+        listMessage.add(
+            Message(
+                "I am fine.Are you ?",
+                MessageType.INCOMING
+            )
+        )
+        listMessage.add(
+            Message(
+                "what did you do yesterday ?",
+                MessageType.OUTCOMING
+            )
+        )
     }
 
     fun newInstance() = ChatScreenFragment()

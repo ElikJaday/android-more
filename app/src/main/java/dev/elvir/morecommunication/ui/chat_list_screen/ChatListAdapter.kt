@@ -1,14 +1,13 @@
 package dev.elvir.morecommunication.ui.chat_list_screen
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.elvir.morecommunication.R
-import dev.elvir.morecommunication.data.model.User
+import dev.elvir.morecommunication.data.entity.user.UserEntity
 
 class ChatListAdapter(
-    val listUser: MutableList<User>
+    val listUser: MutableList<UserEntity>
 ) : RecyclerView.Adapter<ChatListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListViewHolder =

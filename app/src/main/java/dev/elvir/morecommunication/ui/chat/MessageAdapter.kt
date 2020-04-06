@@ -5,8 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.elvir.morecommunication.R
-import dev.elvir.morecommunication.data.model.Message
-import dev.elvir.morecommunication.data.model.MessageType
+import dev.elvir.morecommunication.data.entity.message.Message
+import dev.elvir.morecommunication.data.entity.message.MessageType
 
 class MessageAdapter(
     var listMessage: MutableList<Message>

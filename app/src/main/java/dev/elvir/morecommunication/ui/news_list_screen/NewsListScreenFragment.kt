@@ -1,23 +1,18 @@
 package dev.elvir.morecommunication.ui.news_list_screen
 
 import android.os.Bundle
-import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.elvir.morecommunication.R
-import dev.elvir.morecommunication.data.model.User
-import dev.elvir.morecommunication.ui.chat.ChatScreenFragment
-import dev.elvir.morecommunication.ui.chat_list_screen.ChatListAdapter
-import dev.elvir.morecommunication.ui.main_menu_screen.MainMenuActivity
-import kotlinx.android.synthetic.main.fmt_chat_list_screen.*
+import dev.elvir.morecommunication.data.entity.user.UserEntity
 import kotlinx.android.synthetic.main.fmt_news_list_screen.*
 
 class NewsListScreenFragment  : Fragment(){
 
-    var listUser : MutableList<User> = mutableListOf()
+    var listUser : MutableList<UserEntity> = mutableListOf()
 
 
     override fun onCreateView(

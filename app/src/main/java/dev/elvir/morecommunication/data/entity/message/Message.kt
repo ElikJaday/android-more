@@ -1,4 +1,4 @@
-package dev.elvir.morecommunication.data.model
+package dev.elvir.morecommunication.data.entity.message
 
 data class Message (
     val text: String = "",

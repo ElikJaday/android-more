@@ -4,10 +4,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.elvir.morecommunication.R
-import dev.elvir.morecommunication.data.model.User
+import dev.elvir.morecommunication.data.entity.user.UserEntity
 
 class NewsListAdapter(
-    val listUser: MutableList<User>
+    val listUser: MutableList<UserEntity>
 ) : RecyclerView.Adapter<NewsListViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsListViewHolder =
