@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.model.User
+import dev.elvir.morecommunication.data.model.UserType
 import dev.elvir.morecommunication.ui.chat.ChatScreenFragment
 import dev.elvir.morecommunication.ui.main_menu_screen.MainMenuActivity
 import kotlinx.android.synthetic.main.fmt_chat_list_screen.*
@@ -34,10 +35,10 @@ class ChatListScreenFragment : Fragment(){
     }
 
     fun addChatList(){
-        listUser.add(User("Elvir Ibrahimov"))
-        listUser.add(User("Elmar Ibrahimov "))
-        listUser.add(User("Shamil  Efendiyev"))
-        listUser.add(User("Jale Ibrahimove"))
+//        listUser.add(User("Elvir Ibrahimov","","",UserType.ANONYMOUSLY))
+//        listUser.add(User("Elvir Ibrahimov","","",UserType.ANONYMOUSLY))
+//        listUser.add(User("Elvir Ibrahimov","","",UserType.ANONYMOUSLY))
+
     }
 
     companion object {

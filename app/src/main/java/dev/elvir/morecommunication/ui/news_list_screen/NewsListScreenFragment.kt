@@ -40,10 +40,10 @@ class NewsListScreenFragment  : Fragment(){
     }
 
     fun addChatList(){
-        listUser.add(User("Elvir Ibrahimov"))
-        listUser.add(User("Elmar Ibrahimov "))
-        listUser.add(User("Shamil  Efendiyev"))
-        listUser.add(User("Jale Ibrahimove"))
+//        listUser.add(User("Elvir Ibrahimov"))
+//        listUser.add(User("Elmar Ibrahimov "))
+//        listUser.add(User("Shamil  Efendiyev"))
+//        listUser.add(User("Jale Ibrahimove"))
     }
 
     companion object {

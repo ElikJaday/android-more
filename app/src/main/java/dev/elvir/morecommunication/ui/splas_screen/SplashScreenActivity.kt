@@ -4,18 +4,22 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import dev.elvir.morecommunication.R
+import dev.elvir.morecommunication.ui.base.BaseActivity
 import dev.elvir.morecommunication.ui.sign_in_mode.SignInModeScreenActivity
 import ua.naiksoftware.stomp.StompClient
 
 
-class SplashScreenActivity : AppCompatActivity() {
+class SplashScreenActivity : BaseActivity() {
 
     lateinit var stompClient: StompClient
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.colorMainLogo)
+
         setContentView(R.layout.act_splash_screen)
 //        createWebSocketClient();
         Handler().postDelayed({

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.annotation.IdRes
 import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.etebarian.meowbottomnavigation.MeowBottomNavigation
 import dev.elvir.morecommunication.R
@@ -19,6 +20,7 @@ class MainMenuActivity : AppCompatActivity() {
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        window.statusBarColor = ContextCompat.getColor(this, R.color.colorMainLogo)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_main_menu_screen)
         bn_main_navigation.add(MeowBottomNavigation.Model(1, R.drawable.ic_chat))
