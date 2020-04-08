@@ -77,7 +77,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$okhttpVersion"
     //Room DB
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
     implementation "androidx.room:room-guava:$room_version"
     //RxJava 2 permissons

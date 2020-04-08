@@ -3,6 +3,8 @@ package dev.elvir.morecommunication
 import android.app.Application
 import dev.elvir.morecommunication.di.component.AppComponent
 import dev.elvir.morecommunication.di.component.DaggerAppComponent
+import dev.elvir.morecommunication.di.module.AppModule
+import dev.elvir.morecommunication.di.module.RoomModule
 
 class App : Application() {
 
@@ -13,15 +15,11 @@ class App : Application() {
         if (!this::appComponent.isInitialized) {
             appComponent = DaggerAppComponent
                 .builder()
+                .appModule(AppModule(this))
+                .roomModule(RoomModule(this))
                 .build()
                 .also { it.inject(this) }
         }
     }
 
 }
-
-//applicationComponent = DaggerApplicationComponent.builder()
-//.netModule(NetModule())
-//.build()
-//
-//applicationComponent.inject(this)

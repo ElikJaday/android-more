@@ -9,23 +9,42 @@ import android.provider.MediaStore
 import com.tedpark.tedpermission.rx2.TedRx2Permission
 import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.R
+import dev.elvir.morecommunication.constant.GlobalConst.NICK_NAME_PREFIX
+import dev.elvir.morecommunication.data.repository.AuthRepository
+import dev.elvir.morecommunication.data.repository.CurrentUserRepository
 import dev.elvir.morecommunication.ui.base.BaseActivity
+import dev.elvir.morecommunication.ui.main_menu_screen.MainMenuActivity
 import dev.elvir.morecommunication.ui.select_image.SELECT_CAPTURE
 import dev.elvir.morecommunication.ui.select_image.SELECT_MEDIA
 import dev.elvir.morecommunication.ui.select_image.SelectImageFragmentScreen
 import kotlinx.android.synthetic.main.activity_sign_in_anonymously_screen.*
+import retrofit2.Retrofit
+import javax.inject.Inject
 
 
 class SignInAnonymouslyScreenActivity :
-    BaseActivity(), SignInAnonymouslyContract.View, SelectImageFragmentScreen.CallBack {
+    BaseActivity(),
+    SignInAnonymouslyContract.View,
+    SelectImageFragmentScreen.CallBack {
 
-    val presenter: SignInAnonymouslyContract.Presenter = SignInAnonymouslyPresenter(this)
+    @Inject
+    lateinit var retrofit: Retrofit
+
+    @Inject
+    lateinit var currentUserRepository: CurrentUserRepository
+
+    @Inject
+    lateinit var authRepository: AuthRepository
+
+    private lateinit var presenter: SignInAnonymouslyContract.Presenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (applicationContext as App).appComponent.inject(this)
+        presenter = SignInAnonymouslyPresenter(this, retrofit,currentUserRepository,authRepository)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_anonymously_screen)
         addWidgetListener()
+        pet_user_nick_name.addPrefix(NICK_NAME_PREFIX)
     }
 
     fun addWidgetListener() {
@@ -33,18 +52,23 @@ class SignInAnonymouslyScreenActivity :
             TedRx2Permission.with(this)
                 .setPermissions(Manifest.permission.CAMERA)
                 .request()
-                .subscribe (
-                    {
-                        presenter.clickSelectImage()
-                    },
+                .subscribe(
+                    { presenter.clickSelectImage() },
                     {}
                 )
+        }
+        btn_enter.setOnClickListener {
+            presenter.clickEnter(pet_user_nick_name.text.toString())
         }
     }
 
     override fun showSelectImage() {
         val fragment = SelectImageFragmentScreen.newInstance().also { it.registerCallback(this) }
         fragment.show(supportFragmentManager, "")
+    }
+
+    override fun goToMainMenu() {
+        startActivity(Intent(this,MainMenuActivity::class.java))
     }
 
     override fun selected(type: Int) {
@@ -70,7 +94,7 @@ class SignInAnonymouslyScreenActivity :
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
             SELECT_CAPTURE -> {
-                val bitmap : Bitmap? = data?.extras?.get("data") as Bitmap?
+                val bitmap: Bitmap? = data?.extras?.get("data") as Bitmap?
                 iv_choose.setImageBitmap(bitmap)
             }
             SELECT_MEDIA -> {

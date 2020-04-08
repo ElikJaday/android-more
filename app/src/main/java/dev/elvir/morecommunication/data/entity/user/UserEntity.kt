@@ -6,12 +6,11 @@ import androidx.room.PrimaryKey
 @Entity
 data class UserEntity(
     @PrimaryKey(autoGenerate = true)
-    var id: Int,
-    var userName: String = "",
-    var nickName: String,
-    var userPhone: String
-//    var userType: UserTypeEntity,
-//    var userImage: UserImageEntity
+    var id: Int=0,
+    var userName: String="",
+    var nickName: String="",
+    var userPhone: String="",
+    var uid : Long = 0L
 )
 
 

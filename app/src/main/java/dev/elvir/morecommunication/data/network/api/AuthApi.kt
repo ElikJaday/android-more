@@ -8,6 +8,6 @@ import retrofit2.http.POST
 public interface AuthApi {
 
     @POST("user/create")
-    fun authAnonymously(@Body userEntity: UserEntity): Single<Unit>
+    fun authAnonymously(@Body userEntity: UserEntity): Single<UserEntity>
 
 }

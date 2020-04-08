@@ -1,5 +1,6 @@
 package dev.elvir.morecommunication.di.module
 
+import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import dagger.Module
@@ -15,8 +16,8 @@ class PreferencesModule {
 
     @Provides
     @AppScope
-    fun provideMainSharedPreferences(context: Context): SharedPreferences {
-        return context.getSharedPreferences(MAIN_SHARED_PREFERENCES, Context.MODE_PRIVATE)
+    fun provideMainSharedPreferences(application: Application): SharedPreferences {
+        return application.getSharedPreferences(MAIN_SHARED_PREFERENCES, Context.MODE_PRIVATE)
     }
 
 

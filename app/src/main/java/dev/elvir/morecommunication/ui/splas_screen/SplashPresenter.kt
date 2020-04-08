@@ -9,7 +9,7 @@ class SplashPresenter(
     override fun checkVersion() {
         Handler().postDelayed({
             view.goToSignInMode()
-        }, 800)
+        }, 200)
     }
 
 }

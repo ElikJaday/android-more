@@ -29,6 +29,8 @@ class NetworkModule {
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .client(okHttpClient)
             .baseUrl("http://192.168.43.244:9090/").build()
+        //172.20.10.5 albina
+        //192.168.43.244 elvir
     }
 
     @Provides

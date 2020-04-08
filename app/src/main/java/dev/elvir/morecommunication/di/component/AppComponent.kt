@@ -2,9 +2,10 @@ package dev.elvir.morecommunication.di.component
 
 import dagger.Component
 import dev.elvir.morecommunication.App
-import dev.elvir.morecommunication.di.module.AppModule
-import dev.elvir.morecommunication.di.module.NetworkModule
+import dev.elvir.morecommunication.di.module.*
+import dev.elvir.morecommunication.ui.sign_in_anonymously.SignInAnonymouslyPresenter
 import dev.elvir.morecommunication.ui.sign_in_anonymously.SignInAnonymouslyScreenActivity
+import dev.elvir.morecommunication.ui.splas_screen.SplashScreenActivity
 import javax.inject.Scope
 
 @Scope
@@ -14,13 +15,17 @@ annotation class AppScope
 @Component(
     modules = [
         NetworkModule::class,
-        AppModule::class
+        AppModule::class,
+        PreferencesModule::class,
+        RepositoryModule::class,
+        RoomModule::class
     ]
 )
 @AppScope
 interface AppComponent {
 
     fun inject(app: App)
-    fun inject(activity: SignInAnonymouslyScreenActivity)
+    fun inject(signInAnonymouslyScreenActivity: SignInAnonymouslyScreenActivity)
+    fun inject(splashScreenActivity: SplashScreenActivity)
 
 }
