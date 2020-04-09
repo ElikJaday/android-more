@@ -1,6 +1,7 @@
 package dev.elvir.morecommunication.ui.search
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -9,6 +10,7 @@ import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.entity.user.UserEntity
 import dev.elvir.morecommunication.ui.base.BaseActivity
+import dev.elvir.morecommunication.ui.chat.ChatScreenFragment
 import io.reactivex.BackpressureStrategy
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -20,7 +22,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @SuppressLint("CheckResult")
-class SearchFragment : BaseActivity(), SearchContract.View {
+class SearchFragment : BaseActivity(), SearchContract.View, SearchListAdapter.Callback {
 
     @Inject
     lateinit var retrofit: Retrofit
@@ -60,6 +62,12 @@ class SearchFragment : BaseActivity(), SearchContract.View {
 
     override fun updateList(userList: List<UserEntity>) {
         rv_search.layoutManager = LinearLayoutManager(this)
-        rv_search.adapter = SearchListAdapter(userList)
+        rv_search.adapter = SearchListAdapter(userList, this)
+    }
+
+    override fun selectedItem(userEntity: UserEntity) {
+        val intent  = Intent(this, ChatScreenFragment::class.java)
+        intent.putExtra("user",userEntity)
+        startActivity(intent)
     }
 }

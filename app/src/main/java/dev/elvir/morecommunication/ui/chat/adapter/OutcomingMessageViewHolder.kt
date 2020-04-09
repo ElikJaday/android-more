@@ -1,4 +1,4 @@
-package dev.elvir.morecommunication.ui.chat
+package dev.elvir.morecommunication.ui.chat.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

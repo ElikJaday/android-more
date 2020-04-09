@@ -12,4 +12,5 @@ open abstract class BaseActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorMainLogo)
     }
 
+
 }

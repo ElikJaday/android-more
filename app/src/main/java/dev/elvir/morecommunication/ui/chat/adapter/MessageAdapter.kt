@@ -1,4 +1,4 @@
-package dev.elvir.morecommunication.ui.chat
+package dev.elvir.morecommunication.ui.chat.adapter
 
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +9,7 @@ import dev.elvir.morecommunication.data.entity.message.Message
 import dev.elvir.morecommunication.data.entity.message.MessageType
 
 class MessageAdapter(
-    var listMessage: MutableList<Message>
+    var listMessage: List<Message>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_MESSAGE_INCOMING = 1
     private val VIEW_TYPE_MESSAGE_OUTCOMING = 2

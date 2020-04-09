@@ -22,4 +22,8 @@ class CurrentUserRepositoryImpl @Inject constructor(
 
     override fun getUser(): Single<UserEntity> = userDao.getUserByUid(getUid())
 
+    override fun save(uid: Long)  = sharedPreferences.edit().putLong("a", uid).apply()
+
+    override fun gets(): Long = sharedPreferences.getLong("a", 0)
+
 }

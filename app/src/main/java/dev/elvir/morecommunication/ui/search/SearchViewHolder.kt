@@ -9,9 +9,15 @@ class SearchViewHolder(
     val view: View
 ) : RecyclerView.ViewHolder(view) {
 
-    fun bind(userEntity: UserEntity) {
+    fun bind(
+        userEntity: UserEntity,
+        callback: SearchListAdapter.Callback
+    ) {
         val text = view.tv_user_nick_name
         text.text = userEntity.nickName
+        view.vg_item_search_list.setOnClickListener {
+            callback.selectedItem(userEntity)
+        }
     }
 
 }

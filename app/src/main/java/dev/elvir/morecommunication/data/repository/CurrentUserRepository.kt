@@ -11,4 +11,7 @@ interface CurrentUserRepository {
     fun addUser(userEntity: UserEntity) : Completable
     fun getUser(): Single<UserEntity>
 
+    fun save(uid: Long)
+    fun gets():Long
+
 }
