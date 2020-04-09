@@ -1,5 +1,6 @@
 package dev.elvir.morecommunication.ui.chat_list_screen
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.entity.user.UserEntity
 import dev.elvir.morecommunication.ui.chat_create_way.ChatCreateWayFragmentScreen
+import dev.elvir.morecommunication.ui.search.SearchFragment
 import dev.elvir.morecommunication.ui.select_image.SelectImageFragmentScreen
 import kotlinx.android.synthetic.main.fmt_chat_list_screen.*
 
@@ -40,7 +42,7 @@ class ChatListScreenFragment : Fragment(), ChatCreateWayFragmentScreen.CallBack 
     }
 
     override fun selected(type: Int) {
-
+        startActivity(Intent(context,SearchFragment::class.java))
     }
 
 }

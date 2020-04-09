@@ -30,6 +30,7 @@
         </activity>
         <activity android:name=".ui.sign_in.SignInActivity" />
         <activity android:name=".ui.main_menu_screen.MainMenuActivity" />
+        <activity android:name=".ui.search.SearchFragment" />
     </application>
 
 </manifest>
