@@ -8,10 +8,16 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.entity.user.UserEntity
+import dev.elvir.morecommunication.ui.chat_create_way.ChatCreateWayFragmentScreen
+import dev.elvir.morecommunication.ui.select_image.SelectImageFragmentScreen
 import kotlinx.android.synthetic.main.fmt_chat_list_screen.*
 
 
-class ChatListScreenFragment : Fragment() {
+class ChatListScreenFragment : Fragment(), ChatCreateWayFragmentScreen.CallBack {
+
+    companion object {
+        fun newInstance() = ChatListScreenFragment()
+    }
 
     var listUser: MutableList<UserEntity> = mutableListOf()
 
@@ -25,19 +31,16 @@ class ChatListScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        addChatList()
         rv_chat_list.layoutManager = LinearLayoutManager(context!!)
         rv_chat_list.adapter = ChatListAdapter(listUser)
+        iv_create_chat.setOnClickListener {
+            val fragment = ChatCreateWayFragmentScreen.newInstance().also { it.registerCallback(this) }
+            fragment.show(activity!!.supportFragmentManager, "")
+        }
     }
 
-    fun addChatList() {
-//        listUser.add(User("Elvir Ibrahimov","","",UserType.ANONYMOUSLY))
-//        listUser.add(User("Elvir Ibrahimov","","",UserType.ANONYMOUSLY))
-//        listUser.add(User("Elvir Ibrahimov","","",UserType.ANONYMOUSLY))
+    override fun selected(type: Int) {
 
     }
 
-    companion object {
-        fun newInstance() = ChatListScreenFragment()
-    }
 }

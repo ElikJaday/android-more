@@ -33,7 +33,7 @@ class SelectImageFragmentScreen : ExpandedBottomSheetDialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        vg_capture.setOnClickListener {
+        vg_сapture.setOnClickListener {
             callBack.selected(SELECT_CAPTURE)
             dismiss()
         }
