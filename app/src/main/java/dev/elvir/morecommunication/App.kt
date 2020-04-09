@@ -22,4 +22,7 @@ class App : Application() {
         }
     }
 
+    fun getApplicationComponent()
+            :AppComponent = appComponent
+
 }

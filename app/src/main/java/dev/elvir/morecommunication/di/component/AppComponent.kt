@@ -2,6 +2,7 @@ package dev.elvir.morecommunication.di.component
 
 import dagger.Component
 import dev.elvir.morecommunication.App
+import dev.elvir.morecommunication.data.repository.AuthRepository
 import dev.elvir.morecommunication.di.module.*
 import dev.elvir.morecommunication.ui.search.SearchFragment
 import dev.elvir.morecommunication.ui.sign_in_anonymously.SignInAnonymouslyPresenter
@@ -27,7 +28,9 @@ interface AppComponent {
 
     fun inject(app: App)
     fun inject(signInAnonymouslyScreenActivity: SignInAnonymouslyScreenActivity)
-    fun inject(splashScreenActivity: SplashScreenActivity)
+  //  fun inject(splashScreenActivity: SplashScreenActivity)
     fun inject(searchFragment: SearchFragment)
+
+    fun getAuthRepository(): AuthRepository
 
 }

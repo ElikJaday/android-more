@@ -9,6 +9,8 @@ import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.entity.user.AuthState
 import dev.elvir.morecommunication.data.repository.AuthRepository
+import dev.elvir.morecommunication.di.component.DaggerActivityComponent
+import dev.elvir.morecommunication.di.module.ActivityModule
 import dev.elvir.morecommunication.ui.base.BaseActivity
 import dev.elvir.morecommunication.ui.main_menu_screen.MainMenuActivity
 import dev.elvir.morecommunication.ui.sign_in_mode.SignInModeScreenActivity
@@ -20,19 +22,15 @@ import javax.inject.Inject
 @SuppressLint("CheckResult")
 class SplashScreenActivity : BaseActivity(), SplashContract.SplashView {
 
+    @Inject
     lateinit var presenter: SplashContract.SplashPresenter
 
-    @Inject
-    lateinit var authRepository: AuthRepository
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        (applicationContext as App).appComponent.inject(this)
-        presenter = SplashPresenter(this, authRepository)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.act_splash_screen)
+        getActivityComponent().inject(this)
+        presenter.onAttach(this)
         presenter.checkVersion()
-
-
     }
 
     override fun goToSignInMode() {
