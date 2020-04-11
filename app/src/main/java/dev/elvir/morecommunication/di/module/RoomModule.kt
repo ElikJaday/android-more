@@ -6,6 +6,7 @@ import dagger.Module
 import dagger.Provides
 import dev.elvir.morecommunication.data.db.MoreDB
 import dev.elvir.morecommunication.data.db.dao.AuthDao
+import dev.elvir.morecommunication.data.db.dao.ChatDao
 import dev.elvir.morecommunication.data.db.dao.UserDao
 import dev.elvir.morecommunication.di.component.AppScope
 
@@ -34,6 +35,12 @@ class RoomModule(application: Application) {
     @Provides
     fun providesAuthDao(moreDB: MoreDB): AuthDao {
         return moreDB.authDao()
+    }
+
+    @AppScope
+    @Provides
+    fun providesChatDao(moreDB: MoreDB): ChatDao {
+        return moreDB.chatDao()
     }
 
 }

@@ -1,11 +1,14 @@
 package dev.elvir.morecommunication.data.entity.message
 
-data class Message(
-    var text: String,
-    val uidFrom: Long,
-    val uidTo: Long,
-    val msgUid: Long,
-    val messageType: MessageType
+import androidx.room.Ignore
+
+class Message(
+    var text: String="",
+    var uidFrom: Long=0,
+    var uidTo: Long=0,
+    var msgUid: Long=0,
+    @Ignore
+    val messageType: MessageType = MessageType.OUTCOMING
 )
 
 

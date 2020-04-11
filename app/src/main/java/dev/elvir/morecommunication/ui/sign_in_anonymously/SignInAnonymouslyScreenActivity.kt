@@ -40,11 +40,26 @@ class SignInAnonymouslyScreenActivity :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (applicationContext as App).appComponent.inject(this)
-        presenter = SignInAnonymouslyPresenter(this, retrofit,currentUserRepository,authRepository)
+        presenter = SignInAnonymouslyPresenter(
+            this, retrofit, currentUserRepository, authRepository
+        )
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_anonymously_screen)
         addWidgetListener()
         pet_user_nick_name.addPrefix(NICK_NAME_PREFIX)
+      //  disableButtonEnter()
+    }
+
+    private fun disableButtonEnter() = with(btn_enter) {
+        isEnabled = false
+        background = resources.getDrawable(R.drawable.btn_background_full_disable)
+
+    }
+
+
+    private fun enableButtonEnter() = with(btn_enter) {
+        isEnabled = false
+        background = resources.getDrawable(R.drawable.btn_background_full_disable)
     }
 
     fun addWidgetListener() {
@@ -68,7 +83,7 @@ class SignInAnonymouslyScreenActivity :
     }
 
     override fun goToMainMenu() {
-        startActivity(Intent(this,MainMenuActivity::class.java))
+        startActivity(Intent(this, MainMenuActivity::class.java))
     }
 
     override fun selected(type: Int) {

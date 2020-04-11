@@ -14,8 +14,12 @@ class SignInModeScreenActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_mode_screen)
+        with(btn_enter_sign_in) {
+            background = resources.getDrawable(R.drawable.btn_background_full_disable)
+            isEnabled = false
+        }
         btn_enter_anonymously.setOnClickListener { goToSignInAnonymouslyScreen() }
-        btn_enter_sign_in.setOnClickListener {goToSignInScreen()}
+        btn_enter_sign_in.setOnClickListener { goToSignInScreen() }
     }
 
     override fun goToSignInAnonymouslyScreen() =

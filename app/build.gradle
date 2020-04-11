@@ -79,7 +79,6 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
-    implementation "androidx.room:room-guava:$room_version"
     //RxJava 2 permissons
     implementation 'gun0912.ted:tedpermission-rx2:2.2.3'
 
