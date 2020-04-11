@@ -6,6 +6,7 @@ interface ChatContract {
 
     interface View{
 
+        fun addMessage(text : String)
 
     }
 

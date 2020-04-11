@@ -1,67 +1,71 @@
 package dev.elvir.morecommunication.ui.chat
 
+import android.annotation.SuppressLint
 import com.google.gson.Gson
+import dev.elvir.morecommunication.data.entity.CommandType
+import dev.elvir.morecommunication.data.entity.Container
+import dev.elvir.morecommunication.data.entity.message.Message
+import dev.elvir.morecommunication.data.entity.message.MessageType
 import dev.elvir.morecommunication.data.entity.user.UserEntity
 import dev.elvir.morecommunication.data.repository.CurrentUserRepository
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ua.naiksoftware.stomp.Stomp
 import ua.naiksoftware.stomp.StompClient
+import ua.naiksoftware.stomp.dto.StompMessage
+import java.util.*
 
+@SuppressLint("CheckResult")
 class ChatPresenter(
     val view: ChatContract.View,
     val userRepository: CurrentUserRepository
 ) : ChatContract.Presenter {
-    lateinit var stompClient: StompClient
+
+    var stompClient: StompClient =
+        Stomp.over(Stomp.ConnectionProvider.OKHTTP, "ws://192.168.43.244:9090/connect/websocket")
 
     init {
-        startSocket()
+        stompClient.connect()
+        stompClient.topic("/consumer/${userRepository.getUid()}")
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { handler(it) }
     }
 
     override fun sendMessage(message: String) {
         TODO("Not yet implemented")
     }
 
-    override fun createRoomAndSendMessage(userEntity: UserEntity, msg: String) {
-        val json = Gson().toJson(
-            RoomOffer(
-                listOf(userEntity.uid, userRepository.getUid()),
-                Message(null, msg)
+    override fun createRoomAndSendMessage(userEntity: UserEntity, toString: String) {
+        val body: String = Gson().toJson(
+            Message(
+                toString,
+                userRepository.getUid(),
+                userEntity.uid,
+                Calendar.getInstance().time.time,
+                MessageType.INCOMING
             )
         )
+        val json = Gson().toJson(Container(commandType = CommandType.SEND_MESSAGE, body = body))
         createRoom(json)
     }
 
-    private fun startSocket() {
-        stompClient = Stomp.over(
-            Stomp.ConnectionProvider.OKHTTP,
-            "ws://192.168.43.244:9090/connect/websocket"
-        );
-        stompClient.connect();
-
-        stompClient.topic("/chat/${userRepository.getUid()}").subscribe {
-            it
-        }
-
-    }
 
     private fun createRoom(json: String) {
-        stompClient.send("/create-chat", json).subscribe { }
+        stompClient.send("/create-chat", json).subscribe {
+
+        }
     }
 
-    private fun send(json: String) {
-
+    private fun handler(stompMessage: StompMessage) {
+        val container: Container = Gson().fromJson(stompMessage.payload, Container::class.java)
+        if (container.commandType == CommandType.SEND_MESSAGE) {
+            val message: Message = Gson().fromJson(container.body, Message::class.java)
+            view.addMessage(message.text)
+        }
     }
+
 
 }
-
-
-class RoomOffer(
-    var memberList: List<Long>,
-    var message: Message
-)
-
-class Message(
-    var roomId: Long? = null,
-    var msg: String
-)
 
 

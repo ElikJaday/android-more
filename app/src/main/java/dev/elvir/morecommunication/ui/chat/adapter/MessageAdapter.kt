@@ -9,7 +9,7 @@ import dev.elvir.morecommunication.data.entity.message.Message
 import dev.elvir.morecommunication.data.entity.message.MessageType
 
 class MessageAdapter(
-    var listMessage: List<Message>
+    var listMessage: MutableList<Message>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_MESSAGE_INCOMING = 1
     private val VIEW_TYPE_MESSAGE_OUTCOMING = 2

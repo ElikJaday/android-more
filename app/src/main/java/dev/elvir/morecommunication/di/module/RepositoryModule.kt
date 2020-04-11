@@ -4,11 +4,9 @@ import android.content.SharedPreferences
 import dagger.Module
 import dagger.Provides
 import dev.elvir.morecommunication.data.db.dao.AuthDao
+import dev.elvir.morecommunication.data.db.dao.ChatDao
 import dev.elvir.morecommunication.data.db.dao.UserDao
-import dev.elvir.morecommunication.data.repository.AuthRepository
-import dev.elvir.morecommunication.data.repository.AuthRepositoryImpl
-import dev.elvir.morecommunication.data.repository.CurrentUserRepository
-import dev.elvir.morecommunication.data.repository.CurrentUserRepositoryImpl
+import dev.elvir.morecommunication.data.repository.*
 import dev.elvir.morecommunication.di.component.AppScope
 
 @Module
@@ -35,6 +33,17 @@ class RepositoryModule {
         AuthRepositoryImpl(
             sharedPreferences,
             authDao
+        )
+
+
+    @AppScope
+    @Provides
+    public fun provideChatRepository(
+        userRepository: CurrentUserRepository,
+        chatDao: ChatDao
+    ): ChatRepository =
+        ChatRepositoryImpl(
+            userRepository, chatDao
         )
 
 }
