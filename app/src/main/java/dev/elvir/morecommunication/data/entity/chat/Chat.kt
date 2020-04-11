@@ -1,15 +1,13 @@
 package dev.elvir.morecommunication.data.entity.chat
 
-import androidx.room.Embedded
+import android.os.Parcelable
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
-import dev.elvir.morecommunication.data.entity.message.Message
+import kotlinx.android.parcel.Parcelize
 
+@Parcelize
 @Entity
-class Chat(
-    @PrimaryKey(autoGenerate = false)
-    var chatId: Long =0,
-    @Embedded
-    var lastMessage: Message
-)
+data class Chat(
+    @PrimaryKey
+    var chatId: Long = 0
+) : Parcelable

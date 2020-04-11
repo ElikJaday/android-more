@@ -1,9 +1,9 @@
 package dev.elvir.morecommunication.handler
 
 import com.google.gson.Gson
-import dev.elvir.morecommunication.data.entity.CommandType
-import dev.elvir.morecommunication.data.entity.Container
-import dev.elvir.morecommunication.data.entity.message.Message
+import dev.elvir.morecommunication.data.entity.socket.CommandType
+import dev.elvir.morecommunication.data.entity.socket.Container
+import dev.elvir.morecommunication.data.entity.chat.Message
 import dev.elvir.morecommunication.data.repository.ChatRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

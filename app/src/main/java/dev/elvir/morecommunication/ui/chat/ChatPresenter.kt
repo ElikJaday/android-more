@@ -2,10 +2,10 @@ package dev.elvir.morecommunication.ui.chat
 
 import android.annotation.SuppressLint
 import com.google.gson.Gson
-import dev.elvir.morecommunication.data.entity.CommandType
-import dev.elvir.morecommunication.data.entity.Container
-import dev.elvir.morecommunication.data.entity.message.Message
-import dev.elvir.morecommunication.data.entity.message.MessageType
+import dev.elvir.morecommunication.data.entity.socket.CommandType
+import dev.elvir.morecommunication.data.entity.socket.Container
+import dev.elvir.morecommunication.data.entity.chat.Message
+import dev.elvir.morecommunication.data.entity.chat.MessageType
 import dev.elvir.morecommunication.data.entity.user.UserEntity
 import dev.elvir.morecommunication.data.repository.CurrentUserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -39,14 +39,21 @@ class ChatPresenter(
     override fun createRoomAndSendMessage(userEntity: UserEntity, toString: String) {
         val body: String = Gson().toJson(
             Message(
+                Calendar.getInstance().time.time,
+                null,
                 toString,
                 userRepository.getUid(),
                 userEntity.uid,
-                Calendar.getInstance().time.time,
                 MessageType.INCOMING
+
             )
         )
-        val json = Gson().toJson(Container(commandType = CommandType.SEND_MESSAGE, body = body))
+        val json = Gson().toJson(
+            Container(
+                commandType = CommandType.SEND_MESSAGE,
+                body = body
+            )
+        )
         createRoom(json)
     }
 

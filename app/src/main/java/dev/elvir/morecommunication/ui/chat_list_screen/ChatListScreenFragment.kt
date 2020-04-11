@@ -11,6 +11,7 @@ import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.db.dao.ChatDao
 import dev.elvir.morecommunication.data.entity.chat.Chat
+import dev.elvir.morecommunication.ui.chat.ChatScreenFragment
 import dev.elvir.morecommunication.ui.chat_create_way.ChatCreateWayFragmentScreen
 import dev.elvir.morecommunication.ui.chat_list_screen.adapter.ChatListAdapter
 import dev.elvir.morecommunication.ui.search.SearchFragment
@@ -78,7 +79,10 @@ class ChatListScreenFragment :
     }
 
     override fun selectedItem(chat: Chat) {
-        TODO("Not yet implemented")
+        val intent = Intent(context,ChatScreenFragment::class.java)
+        intent.putExtra("chats",chat)
     }
+
+
 
 }
