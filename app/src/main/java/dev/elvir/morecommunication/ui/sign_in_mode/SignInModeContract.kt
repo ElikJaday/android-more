@@ -1,15 +1,17 @@
 package dev.elvir.morecommunication.ui.sign_in_mode
 
+import dev.elvir.morecommunication.ui.base.Presenter
+
 interface SignInModeContract {
 
-    interface SignInModeView {
+    interface SignInModeMvpView {
 
         fun goToSignInAnonymouslyScreen()
         fun goToSignInScreen()
 
     }
 
-    interface SignInModePresenter {
+    interface SignInModeMvpPresenter : Presenter<SignInModeMvpView> {
 
     }
 

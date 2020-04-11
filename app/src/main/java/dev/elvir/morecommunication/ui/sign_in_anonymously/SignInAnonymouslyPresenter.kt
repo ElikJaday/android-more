@@ -4,45 +4,44 @@ import android.annotation.SuppressLint
 import dev.elvir.morecommunication.data.entity.user.AuthEntity
 import dev.elvir.morecommunication.data.entity.user.AuthState
 import dev.elvir.morecommunication.data.entity.user.UserEntity
+import dev.elvir.morecommunication.data.interactor.SignInAnonymInteractor
 import dev.elvir.morecommunication.data.network.api.AuthApi
 import dev.elvir.morecommunication.data.repository.AuthRepository
 import dev.elvir.morecommunication.data.repository.CurrentUserRepository
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.Retrofit
+import javax.inject.Inject
 
 @SuppressLint("CheckResult")
-class SignInAnonymouslyPresenter(
-    val view: SignInAnonymouslyContract.View,
-    val retrofit: Retrofit,
-    val currentUserRepository: CurrentUserRepository,
-    val authRepository: AuthRepository
-) : SignInAnonymouslyContract.Presenter {
+class SignInAnonymouslyPresenter @Inject constructor(
+    private val interactor: SignInAnonymInteractor
+) : SignInAnonymouslyContract.SignInAnonymMvpPresenter {
+    private var mvpView: SignInAnonymouslyContract.SignInAnonymMvpView? = null
 
     override fun clickEnter(userNickname: String) {
-        retrofit.create(AuthApi::class.java)
-            .authAnonymously(UserEntity(nickName = userNickname))
+        interactor
+            .authAnonymosly(userNickname)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 saveAllData(it)
-                view.goToMainMenu()
+                mvpView?.goToMainMenu()
 
             }, {})
     }
 
     private fun saveAllData(userEntity: UserEntity) {
-        currentUserRepository.addUid(userEntity.uid)
-        currentUserRepository.addUser(userEntity)
-            .andThen(
-                authRepository.addAuthEntity(
-                    AuthEntity(authState = AuthState.ACTIVATED)
-                )
-            )
+        interactor.saveAllData(userEntity)
+
     }
 
     override fun clickSelectImage() {
-        view.showSelectImage()
+        mvpView?.showSelectImage()
+    }
+
+    override fun onAttach(view: SignInAnonymouslyContract.SignInAnonymMvpView) {
+        this.mvpView = view
     }
 
 }

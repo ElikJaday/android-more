@@ -16,7 +16,7 @@ open abstract class BaseActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         daggerActivityComponent = DaggerActivityComponent.builder()
-            .appComponent((applicationContext as App).getApplicationComponent())
+            .appComponent((applicationContext as App).appComponent)
             .activityModule(ActivityModule(this))
             .build()
         window.statusBarColor = ContextCompat.getColor(this, R.color.colorMainLogo)

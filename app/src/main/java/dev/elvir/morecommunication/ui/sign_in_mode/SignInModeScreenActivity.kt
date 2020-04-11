@@ -7,13 +7,18 @@ import dev.elvir.morecommunication.ui.base.BaseActivity
 import dev.elvir.morecommunication.ui.sign_in.SignInActivity
 import dev.elvir.morecommunication.ui.sign_in_anonymously.SignInAnonymouslyScreenActivity
 import kotlinx.android.synthetic.main.activity_sign_in_mode_screen.*
+import javax.inject.Inject
 
 class SignInModeScreenActivity :
-    BaseActivity(), SignInModeContract.SignInModeView {
+    BaseActivity(), SignInModeContract.SignInModeMvpView {
+    @Inject
+    lateinit var signInModeMvpPresenter: SignInModeContract.SignInModeMvpPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_mode_screen)
+        getActivityComponent().inject(this)
+        signInModeMvpPresenter.onAttach(this)
         with(btn_enter_sign_in) {
             background = resources.getDrawable(R.drawable.btn_background_full_disable)
             isEnabled = false

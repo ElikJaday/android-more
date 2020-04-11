@@ -2,8 +2,7 @@ package dev.elvir.morecommunication.di.module
 
 import dagger.Module
 import dagger.Provides
-import dev.elvir.morecommunication.data.interactor.SplashInteractor
-import dev.elvir.morecommunication.data.interactor.SplashInteractorImpl
+import dev.elvir.morecommunication.data.interactor.*
 import dev.elvir.morecommunication.di.component.ActivityScope
 
 @Module
@@ -13,4 +12,21 @@ class InteractorModule {
     @Provides
     fun provideSplashInteractor(splashInteractorImpl: SplashInteractorImpl)
             : SplashInteractor = splashInteractorImpl
+
+    @ActivityScope
+    @Provides
+    fun provideSignInInteractor (signInInteractorImpl: SignInInteractorImpl)
+            :SignInInteractor = signInInteractorImpl
+
+    @ActivityScope
+    @Provides
+    fun provideSignInAnonymoslyInteractor(signInAnonymoslyImpl: SignInAnonymInteractorImpl)
+            :SignInAnonymInteractor = signInAnonymoslyImpl
+
+    @ActivityScope
+    @Provides
+    fun provideSignInModeInteractor(signInModeInteractorImpl: SignInModeInteractorImpl)
+            :SignInModeInteractor = signInModeInteractorImpl
+
+
 }
