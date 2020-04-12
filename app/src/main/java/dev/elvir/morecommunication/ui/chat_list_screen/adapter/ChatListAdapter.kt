@@ -5,11 +5,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.entity.chat.Chat
+import dev.elvir.morecommunication.ext.autoNotify
+import kotlin.properties.Delegates
 
 class ChatListAdapter(
-    val list: MutableList<Chat>,
     val callback: Callback
 ) : RecyclerView.Adapter<ChatListViewHolder>() {
+
+    var list: List<Chat> by Delegates.observable(emptyList()) { prop, old, new ->
+        autoNotify(old, new) { o, n -> o.chatId == n.chatId }
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListViewHolder =
         ChatListViewHolder(

@@ -2,27 +2,46 @@ package dev.elvir.morecommunication.data.db.dao
 
 import androidx.room.*
 import dev.elvir.morecommunication.data.entity.chat.Chat
+import dev.elvir.morecommunication.data.entity.chat.Message
 import io.reactivex.Flowable
-import java.lang.Exception
 
 
 @Dao
 interface ChatDao {
 
     @Insert(onConflict = OnConflictStrategy.FAIL)
-    fun insert(chat: Chat): Long
+    fun insertChat(chat: Chat): Long
 
     @Update(onConflict = OnConflictStrategy.FAIL)
-    fun update(chat: Chat): Int
+    fun updateChat(chat: Chat): Int
+
+    @Insert(onConflict = OnConflictStrategy.FAIL)
+    fun insertMsg(message: Message): Long
+
+    @Update(onConflict = OnConflictStrategy.FAIL)
+    fun updateMsg(message: Message): Int
+
+    @Query("select * from Message m where m.chatLinkId = :chatId")
+    fun getAllMsg(chatId: Long): Flowable<MutableList<Message>>
 
     @Query("select * from chat")
     fun getAll(): Flowable<MutableList<Chat>>
 
-    fun upsert(chat: Chat) {
+    fun upsertChat(chat: Chat) {
         try {
-            insert(chat)
-        }catch (e : Exception){
-            update(chat)
+            insertChat(chat)
+        } catch (e: Exception) {
+            updateChat(chat)
+        }
+    }
+
+    fun upsertMessage(message: Message) {
+        try {
+           val a =insertMsg(message)
+             a
+        } catch (e: Exception) {
+           val b =  updateMsg(message)
+            b
         }
     }
 }

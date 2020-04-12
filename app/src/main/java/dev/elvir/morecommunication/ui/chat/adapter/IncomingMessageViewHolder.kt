@@ -2,7 +2,7 @@ package dev.elvir.morecommunication.ui.chat.adapter
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import dev.elvir.morecommunication.data.entity.message.Message
+import dev.elvir.morecommunication.data.entity.chat.Message
 import kotlinx.android.synthetic.main.list_item_incoming_massage.view.*
 
 class IncomingMessageViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

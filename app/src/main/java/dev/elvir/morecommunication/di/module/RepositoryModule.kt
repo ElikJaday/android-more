@@ -8,6 +8,7 @@ import dev.elvir.morecommunication.data.db.dao.ChatDao
 import dev.elvir.morecommunication.data.db.dao.UserDao
 import dev.elvir.morecommunication.data.repository.*
 import dev.elvir.morecommunication.di.component.AppScope
+import ua.naiksoftware.stomp.StompClient
 
 @Module
 class RepositoryModule {
@@ -40,10 +41,13 @@ class RepositoryModule {
     @Provides
     public fun provideChatRepository(
         userRepository: CurrentUserRepository,
-        chatDao: ChatDao
+        chatDao: ChatDao,
+        stompClient: StompClient
     ): ChatRepository =
         ChatRepositoryImpl(
-            userRepository, chatDao
+            userRepository,
+            chatDao,
+            stompClient
         )
 
 }

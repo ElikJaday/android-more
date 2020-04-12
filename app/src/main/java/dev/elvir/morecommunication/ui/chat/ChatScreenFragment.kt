@@ -1,47 +1,47 @@
 package dev.elvir.morecommunication.ui.chat
 
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.R
-import dev.elvir.morecommunication.data.entity.message.Message
-import dev.elvir.morecommunication.data.entity.message.MessageType
-import dev.elvir.morecommunication.data.entity.user.UserEntity
+import dev.elvir.morecommunication.data.entity.chat.Message
+import dev.elvir.morecommunication.data.repository.ChatRepository
 import dev.elvir.morecommunication.data.repository.CurrentUserRepository
 import dev.elvir.morecommunication.ui.base.BaseActivity
 import dev.elvir.morecommunication.ui.chat.adapter.MessageAdapter
 import kotlinx.android.synthetic.main.fmt_chat_screen.*
 import javax.inject.Inject
 
-class ChatScreenFragment : BaseActivity(), ChatContract.View {
+const val CHAT_KEY: String = "CHAT_KEY"
 
-    lateinit var presenter: ChatContract.Presenter
+class ChatScreenFragment : BaseActivity(), ChatContract.View {
 
     @Inject
     lateinit var userRepository: CurrentUserRepository
 
-    lateinit var userEntity: UserEntity
+    @Inject
+    lateinit var chatRepository: ChatRepository
+
+    lateinit var presenter: ChatContract.Presenter
     lateinit var adapter: MessageAdapter
-    var listMessage: MutableList<Message> = mutableListOf()
-    var createdRoom: Boolean = false
+    private var listMessage: MutableList<Message> = mutableListOf()
+    private var uid: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         (applicationContext as App).appComponent.inject(this)
-        presenter = ChatPresenter(this, userRepository)
+        presenter = ChatPresenter(this, userRepository, chatRepository)
         super.onCreate(savedInstanceState)
+        uid = intent.getLongExtra(CHAT_KEY, 0)
         setContentView(R.layout.fmt_chat_screen)
         setUpRecylerView()
         setUpListener()
+        presenter.fetchMessage(uid)
     }
 
     private fun setUpListener() {
         btn_send.setOnClickListener {
-            if (createdRoom) {
-                presenter.sendMessage(et_message.text.toString())
-            } else {
-                presenter.createRoomAndSendMessage(userEntity, et_message.text.toString())
-            }
+            presenter.sendMessage(toUser = uid, message = et_message.text.toString()
+            )
         }
     }
 
@@ -55,15 +55,8 @@ class ChatScreenFragment : BaseActivity(), ChatContract.View {
         rv_chat.adapter = adapter
     }
 
-
-    override fun onResume() {
-        super.onResume()
-        userEntity = intent.getParcelableExtra("user") as UserEntity
-        Log.e("Info", "" + userEntity.uid)
-    }
-
-    override fun addMessage(text: String) {
-        listMessage.add(Message(text, 0, 0, 0, MessageType.OUTCOMING))
+    override fun showMessage(message: Message) {
+        listMessage.add(message)
         adapter.notifyItemInserted(listMessage.size - 1)
         rv_chat.adapter?.itemCount?.minus(1)?.let { rv_chat.scrollToPosition(it) }
     }

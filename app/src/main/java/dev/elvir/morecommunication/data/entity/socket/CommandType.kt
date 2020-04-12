@@ -1,4 +1,4 @@
-package dev.elvir.morecommunication.data.entity
+package dev.elvir.morecommunication.data.entity.socket
 
 enum class CommandType(type: Int) {
     CREATE_ROOM(0),

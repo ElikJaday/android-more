@@ -1,19 +1,19 @@
 package dev.elvir.morecommunication.ui.chat
 
-import dev.elvir.morecommunication.data.entity.user.UserEntity
+import dev.elvir.morecommunication.data.entity.chat.Message
 
 interface ChatContract {
 
-    interface View{
+    interface View {
 
-        fun addMessage(text : String)
+        fun showMessage(message: Message)
 
     }
 
-    interface Presenter{
+    interface Presenter {
 
-        fun sendMessage(message: String)
-        fun createRoomAndSendMessage(userEntity: UserEntity, toString: String)
+        fun fetchMessage(chatId: Long)
+        fun sendMessage(message: String, toUser: Long)
 
     }
 

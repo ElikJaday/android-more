@@ -11,6 +11,8 @@ import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.db.dao.ChatDao
 import dev.elvir.morecommunication.data.entity.chat.Chat
+import dev.elvir.morecommunication.ui.chat.CHAT_KEY
+import dev.elvir.morecommunication.ui.chat.ChatScreenFragment
 import dev.elvir.morecommunication.ui.chat_create_way.ChatCreateWayFragmentScreen
 import dev.elvir.morecommunication.ui.chat_list_screen.adapter.ChatListAdapter
 import dev.elvir.morecommunication.ui.search.SearchFragment
@@ -53,6 +55,7 @@ class ChatListScreenFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setUpRecycler()
+        presenter.fetchData()
         iv_create_chat.setOnClickListener {
             val fragment =
                 ChatCreateWayFragmentScreen.newInstance().also { it.registerCallback(this) }
@@ -62,7 +65,7 @@ class ChatListScreenFragment :
 
     private fun setUpRecycler() {
         rv_chat_list.layoutManager = LinearLayoutManager(context!!)
-        adapter = ChatListAdapter(listChat,this)
+        adapter = ChatListAdapter(this)
         rv_chat_list.adapter = adapter
     }
 
@@ -71,14 +74,14 @@ class ChatListScreenFragment :
     }
 
     override fun showChatList(list: MutableList<Chat>) {
-        for (chat in list) {
-            listChat.add(chat)
-            adapter.notifyItemInserted(listChat.size - 1)
-        }
+        adapter.list = list
     }
 
     override fun selectedItem(chat: Chat) {
-        TODO("Not yet implemented")
+        val intent = Intent(context, ChatScreenFragment::class.java)
+        intent.putExtra(CHAT_KEY, chat.chatId)
+        startActivity(intent)
     }
+
 
 }
