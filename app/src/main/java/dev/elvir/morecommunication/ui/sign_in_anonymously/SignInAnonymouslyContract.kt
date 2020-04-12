@@ -1,19 +1,17 @@
 package dev.elvir.morecommunication.ui.sign_in_anonymously
 
+import dev.elvir.morecommunication.ui.base.Presenter
+
 interface SignInAnonymouslyContract {
 
-    interface View {
+    interface SignInAnonymMvpView{
 
         fun showSelectImage()
         fun goToMainMenu()
-
     }
 
-    interface Presenter {
-
+    interface SignInAnonymMvpPresenter:Presenter<SignInAnonymMvpView> {
         fun clickEnter(userNickname: String)
         fun clickSelectImage()
-
     }
-
 }

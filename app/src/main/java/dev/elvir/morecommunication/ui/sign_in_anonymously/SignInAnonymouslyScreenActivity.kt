@@ -24,27 +24,17 @@ import javax.inject.Inject
 
 class SignInAnonymouslyScreenActivity :
     BaseActivity(),
-    SignInAnonymouslyContract.View,
+    SignInAnonymouslyContract.SignInAnonymMvpView,
     SelectImageFragmentScreen.CallBack {
 
     @Inject
-    lateinit var retrofit: Retrofit
-
-    @Inject
-    lateinit var currentUserRepository: CurrentUserRepository
-
-    @Inject
-    lateinit var authRepository: AuthRepository
-
-    private lateinit var presenter: SignInAnonymouslyContract.Presenter
+    lateinit var signInAnonymPresenter: SignInAnonymouslyContract.SignInAnonymMvpPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (applicationContext as App).appComponent.inject(this)
-        presenter = SignInAnonymouslyPresenter(
-            this, retrofit, currentUserRepository, authRepository
-        )
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_anonymously_screen)
+        getActivityComponent().inject(this)
+        signInAnonymPresenter.onAttach(this)
         addWidgetListener()
         pet_user_nick_name.addPrefix(NICK_NAME_PREFIX)
       //  disableButtonEnter()
@@ -68,12 +58,12 @@ class SignInAnonymouslyScreenActivity :
                 .setPermissions(Manifest.permission.CAMERA)
                 .request()
                 .subscribe(
-                    { presenter.clickSelectImage() },
+                    { signInAnonymPresenter.clickSelectImage() },
                     {}
                 )
         }
         btn_enter.setOnClickListener {
-            presenter.clickEnter(pet_user_nick_name.text.toString())
+            signInAnonymPresenter.clickEnter(pet_user_nick_name.text.toString())
         }
     }
 
