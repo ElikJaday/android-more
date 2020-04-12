@@ -30,8 +30,8 @@ class InteractorModule {
 
     @ActivityScope
     @Provides
-    fun provideChatInteractor(chatInteractorImpl: ChatListInteractorImpl)
-            :ChatListInteractor = chatInteractorImpl
+    fun provideChatListInteractor(chatListInteractorImpl: ChatListInteractorImpl)
+            :ChatListInteractor = chatListInteractorImpl
 
     @ActivityScope
     @Provides
@@ -42,6 +42,13 @@ class InteractorModule {
     @Provides
     fun provideSearchInteractor(searchInteractorImpl: SearchInteractorImpl)
             :SearchInteractor = searchInteractorImpl
+
+    @ActivityScope
+    @Provides
+    fun provideChatInteractor(chatInteractorImpl: ChatInteractorImpl)
+            :ChatInteractor = chatInteractorImpl
+
+
 
 
 

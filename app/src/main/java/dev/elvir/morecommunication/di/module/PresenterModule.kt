@@ -3,6 +3,8 @@ package dev.elvir.morecommunication.di.module
 import dagger.Module
 import dagger.Provides
 import dev.elvir.morecommunication.di.component.ActivityScope
+import dev.elvir.morecommunication.ui.chat.ChatContract
+import dev.elvir.morecommunication.ui.chat.ChatPresenter
 import dev.elvir.morecommunication.ui.chat_list_screen.ChatListContract
 import dev.elvir.morecommunication.ui.chat_list_screen.ChatListPresenter
 import dev.elvir.morecommunication.ui.news_list_screen.NewsListContract
@@ -55,5 +57,10 @@ class PresenterModule {
     @ActivityScope
     fun provideSearchPresenter(searchPresenter: SearchPresenter)
             : SearchContract.SearchMvpPresenter = searchPresenter
+
+    @Provides
+    @ActivityScope
+    fun provideChatPresenter(chatPresenter: ChatPresenter)
+            : ChatContract.ChatMvpPresenter = chatPresenter
 
 }

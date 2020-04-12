@@ -36,7 +36,7 @@ interface AppComponent {
 
     fun inject(app: App)
  //   fun inject(searchFragment: SearchFragment)
-    fun inject(chatScreenFragment: ChatScreenFragment)
+  //  fun inject(chatScreenFragment: ChatScreenFragment)
    // fun inject(chatListScreenFragment: ChatListScreenFragment)
 
     fun getAuthRepository(): AuthRepository

@@ -2,11 +2,8 @@ package dev.elvir.morecommunication.ui.chat
 
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.entity.chat.Message
-import dev.elvir.morecommunication.data.repository.ChatRepository
-import dev.elvir.morecommunication.data.repository.CurrentUserRepository
 import dev.elvir.morecommunication.ui.base.BaseActivity
 import dev.elvir.morecommunication.ui.chat.adapter.MessageAdapter
 import kotlinx.android.synthetic.main.fmt_chat_screen.*
@@ -14,22 +11,18 @@ import javax.inject.Inject
 
 const val CHAT_KEY: String = "CHAT_KEY"
 
-class ChatScreenFragment : BaseActivity(), ChatContract.View {
+class ChatScreenFragment : BaseActivity(), ChatContract.ChatMvpView {
+
 
     @Inject
-    lateinit var userRepository: CurrentUserRepository
-
-    @Inject
-    lateinit var chatRepository: ChatRepository
-
-    lateinit var presenter: ChatContract.Presenter
+    lateinit var presenter: ChatContract.ChatMvpPresenter
     lateinit var adapter: MessageAdapter
     private var listMessage: MutableList<Message> = mutableListOf()
     private var uid: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (applicationContext as App).appComponent.inject(this)
-        presenter = ChatPresenter(this, userRepository, chatRepository)
+        getActivityComponent().inject(this)
+        presenter.onAttach(this)
         super.onCreate(savedInstanceState)
         uid = intent.getLongExtra(CHAT_KEY, 0)
         setContentView(R.layout.fmt_chat_screen)
