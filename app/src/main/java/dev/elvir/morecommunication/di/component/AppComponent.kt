@@ -3,8 +3,10 @@ package dev.elvir.morecommunication.di.component
 import dagger.Component
 import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.data.db.dao.AuthDao
+import dev.elvir.morecommunication.data.db.dao.ChatDao
 import dev.elvir.morecommunication.data.db.dao.UserDao
 import dev.elvir.morecommunication.data.repository.AuthRepository
+import dev.elvir.morecommunication.data.repository.ChatRepository
 import dev.elvir.morecommunication.data.repository.CurrentUserRepository
 import dev.elvir.morecommunication.di.module.*
 import dev.elvir.morecommunication.ui.chat.ChatScreenFragment
@@ -33,15 +35,17 @@ annotation class AppScope
 interface AppComponent {
 
     fun inject(app: App)
-    fun inject(searchFragment: SearchFragment)
+ //   fun inject(searchFragment: SearchFragment)
     fun inject(chatScreenFragment: ChatScreenFragment)
-    fun inject(chatListScreenFragment: ChatListScreenFragment)
+   // fun inject(chatListScreenFragment: ChatListScreenFragment)
 
     fun getAuthRepository(): AuthRepository
     fun getCurrentUserRepository(): CurrentUserRepository
+    fun getChatRepository():ChatRepository
     fun getRetrofit(): Retrofit
 
     fun userDao(): UserDao
     fun AuthDao(): AuthDao
+    fun chatDao():ChatDao
 
 }

@@ -28,5 +28,21 @@ class InteractorModule {
     fun provideSignInModeInteractor(signInModeInteractorImpl: SignInModeInteractorImpl)
             :SignInModeInteractor = signInModeInteractorImpl
 
+    @ActivityScope
+    @Provides
+    fun provideChatInteractor(chatInteractorImpl: ChatListInteractorImpl)
+            :ChatListInteractor = chatInteractorImpl
+
+    @ActivityScope
+    @Provides
+    fun provideNewsListInteractor(newsListInteractorImpl: NewsListInteractorImpl)
+            :NewsListInteractor = newsListInteractorImpl
+
+    @ActivityScope
+    @Provides
+    fun provideSearchInteractor(searchInteractorImpl: SearchInteractorImpl)
+            :SearchInteractor = searchInteractorImpl
+
+
 
 }

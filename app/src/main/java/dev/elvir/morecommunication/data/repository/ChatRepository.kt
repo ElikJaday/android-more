@@ -13,6 +13,7 @@ interface ChatRepository {
     fun saveChat(message: Message): Completable
     fun sendMessage(json: String): Completable
     fun getAll(chatId: Long): Flowable<MutableList<Message>>
+    fun getAllChats(): Flowable<MutableList<Chat>>
 
 }
 
@@ -39,5 +40,7 @@ class ChatRepositoryImpl @Inject constructor(
     }
 
     override fun getAll(chatId: Long): Flowable<MutableList<Message>> = chatDao.getAllMsg(chatId)
+    override fun getAllChats(): Flowable<MutableList<Chat>>  = chatDao.getAll()
+
 
 }

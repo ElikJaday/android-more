@@ -21,7 +21,7 @@ class SignInModeScreenActivity :
         signInModeMvpPresenter.onAttach(this)
         with(btn_enter_sign_in) {
             background = resources.getDrawable(R.drawable.btn_background_full_disable)
-            isEnabled = false
+        //    isEnabled = false
         }
         btn_enter_anonymously.setOnClickListener { goToSignInAnonymouslyScreen() }
         btn_enter_sign_in.setOnClickListener { goToSignInScreen() }

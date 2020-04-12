@@ -11,6 +11,7 @@ import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.db.dao.ChatDao
 import dev.elvir.morecommunication.data.entity.chat.Chat
+import dev.elvir.morecommunication.ui.base.BaseFragment
 import dev.elvir.morecommunication.ui.chat.CHAT_KEY
 import dev.elvir.morecommunication.ui.chat.ChatScreenFragment
 import dev.elvir.morecommunication.ui.chat_create_way.ChatCreateWayFragmentScreen
@@ -21,19 +22,17 @@ import javax.inject.Inject
 
 
 class ChatListScreenFragment :
-    Fragment(),
-    ChatListContract.View,
+    BaseFragment(),
+    ChatListContract.ChatListMvpView,
     ChatCreateWayFragmentScreen.CallBack,
     ChatListAdapter.Callback {
+
+    @Inject
+    lateinit var presenter: ChatListContract.ChatListMvpPresenter
 
     companion object {
         fun newInstance() = ChatListScreenFragment()
     }
-
-    @Inject
-    lateinit var chatDao: ChatDao
-
-    lateinit var presenter: ChatListContract.Presenter
 
     lateinit var adapter: ChatListAdapter
 
@@ -41,8 +40,8 @@ class ChatListScreenFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        (context?.applicationContext as App).appComponent.inject(this)
-        presenter = ChatListPresenter(this, chatDao)
+        getBaseActivity()?.getActivityComponent()?.inject(this)
+        presenter.onAttach(this)
     }
 
     override fun onCreateView(

@@ -24,20 +24,19 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 @SuppressLint("CheckResult")
-class SearchFragment : BaseActivity(), SearchContract.View, SearchListAdapter.Callback {
+class SearchFragment : BaseActivity(), SearchContract.SearchMvpView, SearchListAdapter.Callback {
+
 
     @Inject
-    lateinit var retrofit: Retrofit
-
-    private lateinit var presenter: SearchContract.Presenter
+    lateinit var presenter: SearchContract.SearchMvpPresenter
     private val disposable = CompositeDisposable()
     private val subject = BehaviorSubject.create<String>()
     private val textInput = subject.toFlowable(BackpressureStrategy.LATEST)
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        (applicationContext as App).appComponent.inject(this)
-        presenter = SearchPresenter(this, retrofit)
         super.onCreate(savedInstanceState)
+        getActivityComponent().inject(this)
+        presenter.onAttach(this)
         setContentView(R.layout.ac_search)
         setUpListener()
     }
@@ -68,7 +67,7 @@ class SearchFragment : BaseActivity(), SearchContract.View, SearchListAdapter.Ca
     }
 
     override fun selectedItem(userEntity: UserEntity) {
-        val intent  = Intent(this, ChatScreenFragment::class.java)
+        val intent = Intent(this, ChatScreenFragment::class.java)
         intent.putExtra(CHAT_KEY, userEntity.uid)
         startActivity(intent)
     }
