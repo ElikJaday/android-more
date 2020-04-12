@@ -21,6 +21,8 @@ interface ChatDao {
     @Update(onConflict = OnConflictStrategy.FAIL)
     fun updateMsg(message: Message): Int
 
+    @Query("select * from Message m where m.chatLinkId = :chatId")
+    fun getAllMsg(chatId: Long): Flowable<MutableList<Message>>
 
     @Query("select * from chat")
     fun getAll(): Flowable<MutableList<Chat>>
@@ -35,9 +37,11 @@ interface ChatDao {
 
     fun upsertMessage(message: Message) {
         try {
-            insertMsg(message)
+           val a =insertMsg(message)
+             a
         } catch (e: Exception) {
-            updateMsg(message)
+           val b =  updateMsg(message)
+            b
         }
     }
 }

@@ -1,6 +1,7 @@
 package dev.elvir.morecommunication.ui.search
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -10,6 +11,7 @@ import dev.elvir.morecommunication.App
 import dev.elvir.morecommunication.R
 import dev.elvir.morecommunication.data.entity.user.UserEntity
 import dev.elvir.morecommunication.ui.base.BaseActivity
+import dev.elvir.morecommunication.ui.chat.CHAT_KEY
 import dev.elvir.morecommunication.ui.chat.ChatScreenFragment
 import io.reactivex.BackpressureStrategy
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -67,7 +69,7 @@ class SearchFragment : BaseActivity(), SearchContract.View, SearchListAdapter.Ca
 
     override fun selectedItem(userEntity: UserEntity) {
         val intent  = Intent(this, ChatScreenFragment::class.java)
-        intent.putExtra("user",userEntity)
+        intent.putExtra(CHAT_KEY, userEntity.uid)
         startActivity(intent)
     }
 }

@@ -91,14 +91,14 @@ class App : Application() {
     }
 
     private fun subscibeSocketChanel() {
-        stompClient.topic("/consumer/1")
-                .ioToMain()
-                .subscribe(
-                    {
-                        globalSocketHandler.handlerChanelReceiveMessage(it.payload)
-                    },
-                    {}
-                )
+        stompClient.topic("/consumer/${userRepository.getUid()}")
+            .ioToMain()
+            .subscribe(
+                {
+                    globalSocketHandler.handlerChanelReceiveMessage(it.payload)
+                },
+                {}
+            )
 
     }
 
