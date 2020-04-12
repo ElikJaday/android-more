@@ -5,19 +5,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import dev.elvir.morecommunication.R
+import dev.elvir.morecommunication.data.entity.chat.Chat
 import dev.elvir.morecommunication.data.entity.chat.Message
 import dev.elvir.morecommunication.data.entity.chat.MessageType
+import dev.elvir.morecommunication.ext.autoNotify
+import kotlin.properties.Delegates
 
 class MessageAdapter(
-    var listMessage: MutableList<Message>
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_MESSAGE_INCOMING = 1
     private val VIEW_TYPE_MESSAGE_OUTCOMING = 2
 
+    var listMessage: List<Message> by Delegates.observable(emptyList()) { prop, old, new ->
+        autoNotify(old, new) { o, n -> o.msgUid == n.msgUid }
+    }
+
     override fun getItemViewType(position: Int): Int {
         return when (listMessage[position].messageType) {
-            MessageType.INCOMING -> { VIEW_TYPE_MESSAGE_INCOMING }
-            MessageType.OUTCOMING -> { VIEW_TYPE_MESSAGE_OUTCOMING }
+            MessageType.INCOMING -> {
+                VIEW_TYPE_MESSAGE_INCOMING
+            }
+            MessageType.OUTCOMING -> {
+                VIEW_TYPE_MESSAGE_OUTCOMING
+            }
             else -> throw RuntimeException("Message view type not found")
         }
     }

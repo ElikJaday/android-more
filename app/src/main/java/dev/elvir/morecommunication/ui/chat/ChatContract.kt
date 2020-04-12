@@ -6,7 +6,7 @@ interface ChatContract {
 
     interface View {
 
-        fun showMessage(message: Message)
+        fun showMessage(list : MutableList<Message>)
 
     }
 

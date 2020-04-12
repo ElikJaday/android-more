@@ -3,6 +3,7 @@ package dev.elvir.morecommunication.data.repository
 import dev.elvir.morecommunication.data.db.dao.ChatDao
 import dev.elvir.morecommunication.data.entity.chat.Chat
 import dev.elvir.morecommunication.data.entity.chat.Message
+import dev.elvir.morecommunication.data.entity.chat.MessageType
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import ua.naiksoftware.stomp.StompClient
@@ -24,12 +25,15 @@ class ChatRepositoryImpl @Inject constructor(
 ) : ChatRepository {
 
     override fun saveChat(message: Message): Completable = Completable.fromAction {
+        val m = message
         val chatId = if (message.uidFrom == userRepository.getUid()) {
+            m.messageType = MessageType.OUTCOMING
             message.uidTo
         } else {
-            message. uidFrom
+            m.messageType = MessageType.INCOMING
+            message.uidFrom
         }
-       val m = message
+
         m.chatLinkId = chatId
         chatDao.upsertChat(Chat(chatId))
         chatDao.upsertMessage(m)

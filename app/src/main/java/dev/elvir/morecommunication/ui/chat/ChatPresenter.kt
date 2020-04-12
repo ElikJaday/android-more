@@ -24,9 +24,7 @@ class ChatPresenter(
             .ioToMain()
             .subscribe(
                 {
-                    for (item in it) {
-                        view.showMessage(item)
-                    }
+                   view.showMessage(it)
                 },
                 { it.printStackTrace() },
                 {}

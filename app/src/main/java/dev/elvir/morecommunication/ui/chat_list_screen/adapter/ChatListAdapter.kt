@@ -16,7 +16,6 @@ class ChatListAdapter(
         autoNotify(old, new) { o, n -> o.chatId == n.chatId }
     }
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChatListViewHolder =
         ChatListViewHolder(
             LayoutInflater.from(parent.context).inflate(R.layout.list_item_chat_list, parent, false)

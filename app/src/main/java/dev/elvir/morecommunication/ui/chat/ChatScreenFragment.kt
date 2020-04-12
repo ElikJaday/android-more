@@ -40,24 +40,21 @@ class ChatScreenFragment : BaseActivity(), ChatContract.View {
 
     private fun setUpListener() {
         btn_send.setOnClickListener {
-            presenter.sendMessage(toUser = uid, message = et_message.text.toString()
+            presenter.sendMessage(
+                toUser = uid, message = et_message.text.toString()
             )
         }
     }
 
 
     private fun setUpRecylerView() {
-        val l = LinearLayoutManager(this)
-        l.stackFromEnd = false
-        l.reverseLayout = false
-        rv_chat.layoutManager = l
-        adapter = MessageAdapter(listMessage)
+        rv_chat.layoutManager = LinearLayoutManager(this)
+        adapter = MessageAdapter()
         rv_chat.adapter = adapter
     }
 
-    override fun showMessage(message: Message) {
-        listMessage.add(message)
-        adapter.notifyItemInserted(listMessage.size - 1)
+    override fun showMessage(list: MutableList<Message>) {
+        adapter.listMessage = list
         rv_chat.adapter?.itemCount?.minus(1)?.let { rv_chat.scrollToPosition(it) }
     }
 

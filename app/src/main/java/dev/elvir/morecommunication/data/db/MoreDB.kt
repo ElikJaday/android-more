@@ -8,6 +8,7 @@ import dev.elvir.morecommunication.data.db.dao.ChatDao
 import dev.elvir.morecommunication.data.db.dao.UserDao
 import dev.elvir.morecommunication.data.entity.chat.Chat
 import dev.elvir.morecommunication.data.entity.chat.Message
+import dev.elvir.morecommunication.data.entity.chat.MessageTypeConverter
 import dev.elvir.morecommunication.data.entity.user.AuthEntity
 import dev.elvir.morecommunication.data.entity.user.AuthStateConverter
 import dev.elvir.morecommunication.data.entity.user.UserEntity
@@ -22,7 +23,12 @@ import dev.elvir.morecommunication.data.entity.user.UserEntity
     ],
     version = 1
 )
-@TypeConverters(AuthStateConverter::class)
+@TypeConverters(
+    value = [
+        AuthStateConverter::class,
+        MessageTypeConverter::class
+    ]
+)
 abstract class MoreDB : RoomDatabase() {
 
     abstract fun userDao(): UserDao
