@@ -18,7 +18,7 @@ class SocketModule {
     @AppScope
     @Provides
     fun provideStompClient(): StompClient =
-        Stomp.over(Stomp.ConnectionProvider.OKHTTP, DEBUG_ALBINA_HOST)
+        Stomp.over(Stomp.ConnectionProvider.OKHTTP, DEBUG_ELVIR_HOST)
 
     @AppScope
     @Provides
