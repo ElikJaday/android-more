@@ -8,6 +8,8 @@ import dev.elvir.morecommunication.data.entity.socket.Container
 import dev.elvir.morecommunication.data.repository.ChatRepository
 import dev.elvir.morecommunication.data.repository.CurrentUserRepository
 import dev.elvir.morecommunication.ext.ioToMain
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 @SuppressLint("CheckResult")
@@ -24,7 +26,7 @@ class ChatPresenter(
             .ioToMain()
             .subscribe(
                 {
-                   view.showMessage(it)
+                    view.showMessage(it)
                 },
                 { it.printStackTrace() },
                 {}
@@ -42,7 +44,11 @@ class ChatPresenter(
         val body = Gson().toJson(this.message)
         container = Container(body, CommandType.SEND_MESSAGE)
         val json = Gson().toJson(container)
-        chatRepository.sendMessage(json)
+        chatRepository.sendMessage(json).subscribe()
+        this.message.clientTime = Calendar.getInstance().time.time
+        chatRepository.saveChat(this.message)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
             .subscribe()
     }
 

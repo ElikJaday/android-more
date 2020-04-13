@@ -7,6 +7,7 @@ import dev.elvir.morecommunication.data.entity.chat.MessageType
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import ua.naiksoftware.stomp.StompClient
+import java.util.*
 import javax.inject.Inject
 
 interface ChatRepository {
@@ -25,16 +26,19 @@ class ChatRepositoryImpl @Inject constructor(
 
     override fun saveChat(message: Message): Completable = Completable.fromAction {
         val m = message
+        val chat : Chat
         val chatId = if (message.uidFrom == userRepository.getUid()) {
             m.messageType = MessageType.OUTCOMING
             message.uidTo
         } else {
             m.messageType = MessageType.INCOMING
+            m.clientTime = Calendar.getInstance().time.time
             message.uidFrom
+
         }
 
         m.chatLinkId = chatId
-        chatDao.upsertChat(Chat(chatId))
+        chatDao.upsertChat(Chat(chatId,))
         chatDao.upsertMessage(m)
     }
 

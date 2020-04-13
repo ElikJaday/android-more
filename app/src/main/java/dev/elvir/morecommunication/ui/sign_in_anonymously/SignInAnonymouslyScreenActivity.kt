@@ -13,6 +13,8 @@ import dev.elvir.morecommunication.constant.GlobalConst.NICK_NAME_PREFIX
 import dev.elvir.morecommunication.data.repository.AuthRepository
 import dev.elvir.morecommunication.data.repository.CurrentUserRepository
 import dev.elvir.morecommunication.ui.base.BaseActivity
+import dev.elvir.morecommunication.ui.custom_ui.PREFIX_3
+import dev.elvir.morecommunication.ui.custom_ui.SPACE_BEFORE_TEXT_2
 import dev.elvir.morecommunication.ui.main_menu_screen.MainMenuActivity
 import dev.elvir.morecommunication.ui.select_image.SELECT_CAPTURE
 import dev.elvir.morecommunication.ui.select_image.SELECT_MEDIA
@@ -46,14 +48,13 @@ class SignInAnonymouslyScreenActivity :
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sign_in_anonymously_screen)
         addWidgetListener()
-        pet_user_nick_name.addPrefix(NICK_NAME_PREFIX)
-      //  disableButtonEnter()
+        pet_user_nick_name.addPrefix(PREFIX_3,spaceAfterPrefix = SPACE_BEFORE_TEXT_2)
+        pet_user_nick_name.showCheck(true)
     }
 
     private fun disableButtonEnter() = with(btn_enter) {
         isEnabled = false
         background = resources.getDrawable(R.drawable.btn_background_full_disable)
-
     }
 
 

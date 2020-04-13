@@ -9,5 +9,6 @@ import kotlinx.android.parcel.Parcelize
 @Entity
 data class Chat(
     @PrimaryKey
-    var chatId: Long = 0
+    var chatId: Long = 0,
+    var chatName : String =""
 ) : Parcelable

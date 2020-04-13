@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="8dp"
-            android:drawableEnd="@drawable/ic_check"
+            android:drawableEnd="@drawable/ic_check_yellow"
             android:drawablePadding="8dp"
             android:text="55-555-55-55"
             android:textColor="#141515"
@@ -104,7 +104,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="12dp"
             android:layout_marginRight="128dp"
-            android:drawableEnd="@drawable/ic_check"
+            android:drawableEnd="@drawable/ic_check_yellow"
 
             android:text="LastJadi"
             android:textColor="#141515"

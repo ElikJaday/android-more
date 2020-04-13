@@ -21,7 +21,8 @@ data class Message(
     @Expose(serialize = false, deserialize = false)
     @TypeConverters(MessageTypeConverter::class)
     var messageType: MessageType = MessageType.OUTCOMING,
-    var serverTime : Long = 0
+    var serverTime: Long = 0,
+    var clientTime: Long = 0
 ) : Parcelable
 
 

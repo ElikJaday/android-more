@@ -54,6 +54,7 @@ class ChatScreenFragment : BaseActivity(), ChatContract.View {
     }
 
     override fun showMessage(list: MutableList<Message>) {
+        list
         adapter.listMessage = list
         rv_chat.adapter?.itemCount?.minus(1)?.let { rv_chat.scrollToPosition(it) }
     }

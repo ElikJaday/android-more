@@ -21,7 +21,7 @@ interface ChatDao {
     @Update(onConflict = OnConflictStrategy.FAIL)
     fun updateMsg(message: Message): Int
 
-    @Query("select * from Message m where m.chatLinkId = :chatId")
+    @Query("select * from Message m where m.chatLinkId = :chatId order by m.clientTime desc")
     fun getAllMsg(chatId: Long): Flowable<MutableList<Message>>
 
     @Query("select * from chat")

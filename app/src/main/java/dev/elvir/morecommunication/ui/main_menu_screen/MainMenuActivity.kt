@@ -25,7 +25,7 @@ class MainMenuActivity : AppCompatActivity() {
         setContentView(R.layout.act_main_menu_screen)
         bn_main_navigation.add(MeowBottomNavigation.Model(1, R.drawable.ic_chat))
         bn_main_navigation.add(MeowBottomNavigation.Model(2, R.drawable.ic_newspaper))
-        bn_main_navigation.add(MeowBottomNavigation.Model(3, R.drawable.ic_screen_player))
+        //bn_main_navigation.add(MeowBottomNavigation.Model(3, R.drawable.ic_screen_player))
         bn_main_navigation.add(MeowBottomNavigation.Model(4, R.drawable.ic_user))
         bn_main_navigation.setOnClickMenuListener { handlerBottomMenuNavigation(it.id) }
         bn_main_navigation.show(1)
